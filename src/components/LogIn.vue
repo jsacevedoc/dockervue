@@ -3,11 +3,17 @@
     <h1>{{ msg }}</h1>
     <input v-model="username" placeholder="Username">
   </div>
-  <dir>
+  <br>
+  <div>
     <input v-model="password" placeholder="Password">
-  </dir>
+  </div>
+  <br>
   <div id="example-1">
     <button v-on:click="fetchToken(username, password)">Submit</button>
+  </div>
+  <br>
+  <div>
+    {{ responseStatus }}
   </div>
 </template>
 
@@ -19,6 +25,7 @@ export default {
   name: 'HelloWorld',
   username: "null",
   password: "null",
+  responseStatus: "Response is pending",
   props: {
     msg: String
   },
@@ -31,6 +38,10 @@ export default {
       axios.get('http://ec2-44-204-141-35.compute-1.amazonaws.com:3200/users/sign-in/'+username+'/'+password).then(response => {
         console.log(response)
       })
+      this.setResponseStatus
+    },
+    setResponseStatus(response){
+      this.responseStatus = response.data
     },
   }
 }
